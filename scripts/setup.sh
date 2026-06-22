@@ -62,4 +62,10 @@ else
   log "Xcode tools present (iOS supported)."
 fi
 
+# ADBKeyboard is available but NOT auto-activated — most "inputText does nothing"
+# cases are flow issues (empty variables / wrong selector), not the keyboard.
+# Only if Maestro can't type special/non-ASCII characters, run:
+#   scripts/keyboard.sh use-adb   (and scripts/keyboard.sh restore afterwards)
+log "Tip: if Maestro can't enter special characters on Android, see scripts/keyboard.sh."
+
 log "Done. See README.md for usage."

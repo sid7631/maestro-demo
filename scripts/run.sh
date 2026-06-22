@@ -84,7 +84,8 @@ junit_out="${debug_dir}/junit.xml"
 global=()
 [ -n "$DEVICE" ] && global+=(--device "$DEVICE")
 
-args=(test -e "APP_ID=${APP_ID}" -e "APP_NAME=${APP}" -e "SCREENSHOT_DIR=${screens_dir}")
+SCREENSHOT_DIR="$screens_dir"; build_env_args
+args=(test "${MAESTRO_ENV_ARGS[@]}")
 [ -n "$INCLUDE_TAGS" ] && args+=(--include-tags "$INCLUDE_TAGS")
 [ -n "$EXCLUDE_TAGS" ] && args+=(--exclude-tags "$EXCLUDE_TAGS")
 args+=(--format junit --output "$junit_out" --debug-output "$debug_dir" "$FLOW_PATH")

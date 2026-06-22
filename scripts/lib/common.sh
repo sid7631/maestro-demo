@@ -66,9 +66,37 @@ load_app_config() {
   fi
   set -a; . "${app_file}"; set +a
 
+  # Optional gitignored secrets (credentials, etc.) for this app.
+  local local_file="${APPS_CONFIG_DIR}/${app}.local.env"
+  [ -f "${local_file}" ] && { set -a; . "${local_file}"; set +a; }
+
   : "${APP_ID:?APP_ID must be set in ${app_file}}"
   APP_NAME="${app}"
   export APP_NAME
+}
+
+# Populate MAESTRO_ENV_ARGS with the -e pairs passed into flows: APP_ID,
+# APP_NAME, SCREENSHOT_DIR (if set), plus every var named in MAESTRO_FORWARD
+# (e.g. "USERNAME PASSWORD") that has a value. Call after load_app_config and
+# after setting SCREENSHOT_DIR.
+build_env_args() {
+  MAESTRO_ENV_ARGS=(-e "APP_ID=${APP_ID}" -e "APP_NAME=${APP_NAME}")
+  if [ -n "${SCREENSHOT_DIR:-}" ]; then
+    MAESTRO_ENV_ARGS+=(-e "SCREENSHOT_DIR=${SCREENSHOT_DIR}")
+  fi
+  local v val missing=""
+  for v in ${MAESTRO_FORWARD:-}; do
+    val="${!v:-}"
+    if [ -n "$val" ]; then
+      MAESTRO_ENV_ARGS+=(-e "${v}=${val}")
+    else
+      missing="${missing} ${v}"
+    fi
+  done
+  if [ -n "$missing" ]; then
+    warn "No value for:${missing}. Set them in config/apps/${APP_NAME}.local.env (copy from ${APP_NAME}.local.env.example)."
+  fi
+  return 0
 }
 
 # Resolve the platform: explicit override > app config > global default > android.

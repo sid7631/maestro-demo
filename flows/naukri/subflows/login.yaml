@@ -1,0 +1,32 @@
+# Reusable subflow: log in to Naukri with email + password.
+# Assumes the app is already launched on the login landing screen.
+# Credentials are passed in by the caller (or fall back to the forwarded env).
+# Selectors confirmed from the live view hierarchy (resource-ids are stable;
+# the field hint text is NOT the focusable input).
+appId: ${APP_ID}
+---
+# Choose email login.
+- tapOn: "Continue with Email"
+
+# Google One Tap ("Sign in with Google") sometimes pops up — dismiss only if shown.
+- runFlow:
+    when:
+      visible: "Sign in with Google"
+    commands:
+      - tapOn: "Cancel"
+
+# Email — tap the actual input field by id, then type.
+- tapOn:
+    id: ".*et_email"
+- inputText: ${USERNAME}
+- hideKeyboard
+
+# Password.
+- tapOn:
+    id: ".*et_password"
+- inputText: ${PASSWORD}
+- hideKeyboard
+
+# Submit — bt_login is "Log in" (NOT bt_login_otp, which is "Log in with OTP").
+- tapOn:
+    id: ".*bt_login"

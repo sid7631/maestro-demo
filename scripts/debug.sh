@@ -55,7 +55,7 @@ global=()
 
 screens_dir="${REPORTS_DIR}/${APP}/screenshots/debug"
 mkdir -p "$screens_dir"
+SCREENSHOT_DIR="$screens_dir"; build_env_args
 
 log "Continuous mode on ${FLOW_PATH} — edit & save to rerun, Ctrl-C to stop."
-maestro ${global[@]+"${global[@]}"} test --continuous \
-  -e "APP_ID=${APP_ID}" -e "APP_NAME=${APP}" -e "SCREENSHOT_DIR=${screens_dir}" "$FLOW_PATH"
+maestro ${global[@]+"${global[@]}"} test --continuous "${MAESTRO_ENV_ARGS[@]}" "$FLOW_PATH"

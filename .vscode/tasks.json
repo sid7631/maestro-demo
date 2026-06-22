@@ -35,6 +35,18 @@
       "problemMatcher": []
     },
     {
+      "label": "Maestro: Debug naukri login (continuous)",
+      "type": "shell",
+      "command": "./scripts/debug.sh naukri login/login-with-password.yaml",
+      "problemMatcher": []
+    },
+    {
+      "label": "Maestro: Run naukri login",
+      "type": "shell",
+      "command": "./scripts/run.sh naukri login/login-with-password.yaml",
+      "problemMatcher": []
+    },
+    {
       "label": "Maestro: Report (build & open)",
       "type": "shell",
       "command": "./scripts/report.sh ${input:app}",
@@ -57,6 +69,18 @@
       "type": "shell",
       "command": "adb devices -l",
       "problemMatcher": []
+    },
+    {
+      "label": "Keyboard: Use ADBKeyboard (for text input)",
+      "type": "shell",
+      "command": "./scripts/keyboard.sh use-adb",
+      "problemMatcher": []
+    },
+    {
+      "label": "Keyboard: Restore normal keyboard",
+      "type": "shell",
+      "command": "./scripts/keyboard.sh restore",
+      "problemMatcher": []
     }
   ],
   "inputs": [
@@ -64,14 +88,14 @@
       "id": "app",
       "type": "pickString",
       "description": "Which app?",
-      "options": ["app-one", "app-two"],
-      "default": "app-one"
+      "options": ["naukri", "app-one", "app-two"],
+      "default": "naukri"
     },
     {
       "id": "flow",
       "type": "promptString",
-      "description": "Flow path relative to flows/<app>/ (e.g. smoke/app-launch.yaml)",
-      "default": "smoke/app-launch.yaml"
+      "description": "Flow path relative to flows/<app>/ (e.g. login/login-with-password.yaml)",
+      "default": "login/login-with-password.yaml"
     }
   ]
 }
