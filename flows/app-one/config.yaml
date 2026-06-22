@@ -1,0 +1,9 @@
+# Maestro workspace config for app-one.
+# Patterns are relative to this file. Docs: https://maestro.mobile.dev
+flows:
+  - "**"
+# Uncomment to scope which tagged flows run by default:
+# includeTags:
+#   - smoke
+# excludeTags:
+#   - wip

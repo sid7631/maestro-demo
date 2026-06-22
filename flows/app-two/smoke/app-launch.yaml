@@ -1,0 +1,9 @@
+# Smoke test: the app launches cleanly.
+appId: ${APP_ID}
+tags:
+  - smoke
+---
+- runFlow: ../../common/subflows/launch-app.yaml
+# Screenshots are written to the per-run folder set by the runner (SCREENSHOT_DIR).
+- takeScreenshot: ${SCREENSHOT_DIR}/launch
+# TODO: replace the screenshot with a real assertion for the first screen.

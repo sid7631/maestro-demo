@@ -1,0 +1,20 @@
+{
+  // Treat Maestro flow files as YAML for syntax highlighting.
+  "files.associations": {
+    "flows/**/*.yaml": "yaml",
+    "flows/**/*.yml": "yaml"
+  },
+  // Maestro flows use 2-space indentation.
+  "[yaml]": {
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true
+  },
+  // Keep generated artifacts out of the file explorer & search.
+  "files.exclude": {
+    "reports": true
+  },
+  "search.exclude": {
+    "reports": true,
+    "binaries": true
+  }
+}

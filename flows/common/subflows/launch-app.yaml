@@ -1,0 +1,6 @@
+# Reusable subflow: cold-launch the app under test with clean state.
+# APP_ID is injected at runtime via `maestro test -e APP_ID=...`.
+appId: ${APP_ID}
+---
+- launchApp:
+    clearState: true

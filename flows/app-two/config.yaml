@@ -1,0 +1,8 @@
+# Maestro workspace config for app-two.
+# Patterns are relative to this file. Docs: https://maestro.mobile.dev
+flows:
+  - "**"
+# includeTags:
+#   - smoke
+# excludeTags:
+#   - wip

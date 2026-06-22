@@ -1,0 +1,15 @@
+# Generated reports & debug artifacts
+/reports/
+
+# App builds
+/binaries/*
+!/binaries/.gitkeep
+
+# Local overrides / secrets
+*.local.env
+.env
+
+# Maestro & OS noise
+.maestro/
+*.log
+.DS_Store

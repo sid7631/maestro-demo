@@ -1,0 +1,2 @@
+# Drop app builds here (APKs / .app bundles). Paths are referenced from
+# config/apps/<app>.env. The actual binaries are gitignored.

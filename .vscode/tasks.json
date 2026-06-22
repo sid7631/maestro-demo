@@ -1,0 +1,77 @@
+{
+  // Run these via: Terminal > Run Task...  (or Cmd+Shift+B for the default).
+  // Most tasks prompt for which app to target.
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Maestro: Setup (install/check tooling)",
+      "type": "shell",
+      "command": "./scripts/setup.sh",
+      "problemMatcher": []
+    },
+    {
+      "label": "Maestro: Run suite",
+      "type": "shell",
+      "command": "./scripts/run.sh ${input:app}",
+      "group": { "kind": "build", "isDefault": true },
+      "problemMatcher": []
+    },
+    {
+      "label": "Maestro: Run smoke",
+      "type": "shell",
+      "command": "./scripts/run.sh ${input:app} smoke",
+      "problemMatcher": []
+    },
+    {
+      "label": "Maestro: Run single flow",
+      "type": "shell",
+      "command": "./scripts/run.sh ${input:app} ${input:flow}",
+      "problemMatcher": []
+    },
+    {
+      "label": "Maestro: Debug flow (continuous)",
+      "type": "shell",
+      "command": "./scripts/debug.sh ${input:app} ${input:flow}",
+      "problemMatcher": []
+    },
+    {
+      "label": "Maestro: Report (build & open)",
+      "type": "shell",
+      "command": "./scripts/report.sh ${input:app}",
+      "problemMatcher": []
+    },
+    {
+      "label": "Maestro: Inspect (Studio)",
+      "type": "shell",
+      "command": "./scripts/inspect.sh studio",
+      "problemMatcher": []
+    },
+    {
+      "label": "Maestro: Inspect (hierarchy)",
+      "type": "shell",
+      "command": "./scripts/inspect.sh hierarchy",
+      "problemMatcher": []
+    },
+    {
+      "label": "ADB: List devices",
+      "type": "shell",
+      "command": "adb devices -l",
+      "problemMatcher": []
+    }
+  ],
+  "inputs": [
+    {
+      "id": "app",
+      "type": "pickString",
+      "description": "Which app?",
+      "options": ["app-one", "app-two"],
+      "default": "app-one"
+    },
+    {
+      "id": "flow",
+      "type": "promptString",
+      "description": "Flow path relative to flows/<app>/ (e.g. smoke/app-launch.yaml)",
+      "default": "smoke/app-launch.yaml"
+    }
+  ]
+}
