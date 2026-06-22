@@ -97,13 +97,16 @@ maestro ${global[@]+"${global[@]}"} "${args[@]}" || status=$?
 # Convert Maestro's JUnit + this run's screenshots into native Allure results
 # (so screenshots show up in the report). Remove any legacy junit-*.xml left in
 # allure-results by older runs, which would otherwise show up without images.
-if [ -s "$junit_out" ] && command -v node >/dev/null 2>&1; then
+if [ ! -s "$junit_out" ]; then
+  warn "No JUnit produced by Maestro (did the run fail before any flow ran?). allure-results not updated."
+elif NODE_BIN="$(resolve_node)"; then
   rm -f "${results_dir}"/junit-*.xml
-  node "${_LIB_DIR}/allure_from_maestro.js" \
+  "$NODE_BIN" "${_LIB_DIR}/allure_from_maestro.js" \
     --junit "$junit_out" --screenshots "$screens_dir" \
-    --results "$results_dir" --app "$APP" --flow "$FLOW_PATH" || warn "Allure conversion failed; report will still build from prior results."
+    --results "$results_dir" --app "$APP" --flow "$FLOW_PATH" \
+    || warn "Allure conversion failed; report will still build from prior results."
 else
-  warn "node not found or no JUnit produced; skipping Allure conversion."
+  err "Node.js not found — cannot build Allure results. Install it (brew install node) or run scripts/setup.sh, then re-run."
 fi
 
 log "JUnit results : ${junit_out}"

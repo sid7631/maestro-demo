@@ -31,6 +31,20 @@ require_cmd() {
   command -v "$1" >/dev/null 2>&1 || die "Required command not found: '$1'. Run scripts/setup.sh first."
 }
 
+# Resolve a usable `node` binary. nvm-managed node isn't on PATH in
+# non-interactive shells, so fall back to brew locations and the newest nvm
+# install. Prints the path on success; returns 1 if none found.
+resolve_node() {
+  if command -v node >/dev/null 2>&1; then command -v node; return 0; fi
+  local c
+  for c in /opt/homebrew/bin/node /usr/local/bin/node; do
+    [ -x "$c" ] && { echo "$c"; return 0; }
+  done
+  c="$(ls -1 "${HOME}/.nvm/versions/node"/*/bin/node 2>/dev/null | sort -V | tail -1)"
+  [ -n "$c" ] && [ -x "$c" ] && { echo "$c"; return 0; }
+  return 1
+}
+
 # Print the available app keys (filenames in config/apps without .env).
 list_apps() {
   [ -d "${APPS_CONFIG_DIR}" ] || return 0

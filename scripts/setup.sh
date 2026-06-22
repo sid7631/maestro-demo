@@ -37,6 +37,14 @@ else
   log "Allure present."
 fi
 
+# Node.js (used to build Allure results with screenshots).
+if ! resolve_node >/dev/null 2>&1; then
+  if has brew; then log "Installing Node.js..."; brew install node
+  else warn "Node.js not found. Install with: brew install node"; fi
+else
+  log "Node present: $(resolve_node)"
+fi
+
 # Android (primary target).
 if ! has adb; then
   warn "adb not found (Android). Install Android Studio + SDK platform-tools:"
